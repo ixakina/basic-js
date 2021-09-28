@@ -20,17 +20,15 @@ export default function transform(arr) {
   let res = [];
   arr.forEach((item, i, arr) => {
     if (item == "--double-next") {
-      res.push(arr[i + 1]);
+      if (arr[i + 1]) res.push(arr[i + 1]);
     } else if (item == "--double-prev") {
-      res.push(arr[i - 1]);
+      if (arr[i - 1]) res.push(arr[i - 1]);
     } else if (item == "--discard-prev") {
-      res.pop(arr[i - 1]);
+      if (arr[i - 1]) res.pop(arr[i - 1]);
+    } else if (arr[i - 1] == "--discard-next") {
+      if (arr[i + 1]) res.splice(res.indexOf("--discard-next"), 2);
     } else res.push(item);
   });
-  res.forEach((item, i, arr) => {
-    if (item == "--discard-next") {
-      arr.splice(i, 2);
-    }
-  });
+
   return res;
 }
